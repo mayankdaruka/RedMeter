@@ -1,0 +1,281 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<div>
+    <h1> Red Meter </h1>
+</div>
+{% endblock %}
+
+{% block body %}
+Texas
+{% endblock %}  
+
+{% block cities %}
+<script>
+    // var fort_val = $('#mapb').data('fort')
+    // // var color = '#D7ABD8'
+    // // if (fort_val > 0.7) {
+    // //     color = '#2E82CD';
+    // // }
+    // console.log(fort_val)
+    // var test = document.querySelector('#mapb').fort
+    // console.log(test)
+    var fortworth = '{{ fort | safe }}';
+    var houston = '{{ hou | safe }}';
+    var dallas = '{{ dal | safe }}';
+    var sanantonio = '{{ san | safe }}';
+    var austin = '{{ aus | safe }}';
+    var red = '#FD3A3A';
+    var grey = '#ADADAE';
+    var blue = '#3F3FFF';
+    var houstonColor = red;
+    var sanColor = red;
+    var ausColor = red;
+    var dallasColor = red;
+    var fortColor = red;
+    console.log('{{ fort | safe }}');
+    if ('{{ hou_nan | safe }}' == 'True')
+        houstonColor = grey;
+    else {
+        if (houston < 0.5)
+            houstonColor = blue;
+    }
+    if ('{{ for_nan | safe }}' == 'True')
+        fortColor = grey;
+    else {
+        if (fortworth < 0.5)
+            fortColor = blue;
+    }
+    if ('{{ san_nan | safe }}' == 'True')
+        sanColor = grey;
+    else {
+        if (sanantonio < 0.5)
+            sanColor = blue;
+    }
+    if ('{{ aus_nan | safe }}' == 'True')
+        ausColor = grey;
+    else {
+        if (austin < 0.5)
+            ausColor = blue;
+    }
+    if ('{{ dal_nan | safe }}' == 'True')
+        dallasColor = grey;
+    else {
+        if (dallas < 0.5)
+            dallasColor = blue;
+    }
+    // if ('{{ for_nan | safe }}' == 'True')
+    //     console.log("fort worth is nan")
+
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWtkYXIiLCJhIjoiY2s5NHd6OWhxMGhyMDNqbXlzbjlvaGs0dCJ9.WJ6ck-9lZSI4xl9L3no6SA';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/dark-v10',
+        interactive: true,
+        logoPosition: 'top-left',
+        dragToRotate: false,
+        center: [-96.7020, 31.2969],
+        minZoom: 6.1,
+        maxZoom: 20,
+        doubleClickZoom: true,
+    });
+    map.on('load', function() {
+        map.addSource('san antonio', {
+            'type': 'geojson',
+            'data': {
+            'type': 'Feature',
+            'geometry': {
+            'type': 'Polygon',
+            'coordinates': [[[-98.7011, 29.3839],
+                            [-98.6682, 29.2954],
+                            [-98.6621, 29.2369],
+                            [-98.6239, 29.2273],
+                            [-98.5659, 29.2332],
+                            [-98.5015, 29.2137],
+                            [-98.4131, 29.2187],
+                            [-98.3600, 29.2195],
+                            [-98.2639, 29.3045],
+                            [-98.2596, 29.3097],
+                            [-98.2392, 29.3899],
+                            [-98.2960, 29.4803],
+                            [-98.2878, 29.5113],
+                            [-98.3622, 29.6031],
+                            [-98.4312, 29.6003],
+                            [-98.5238, 29.6091],
+                            [-98.6340, 29.5867],
+                            [-98.6889, 29.5257],
+                            [-98.7096, 29.4833],
+                            [-98.7089, 29.4053],
+                            [-98.7011, 29.3839]
+                ]]
+                }
+            }
+        });
+        map.addLayer({
+            'id': 'san antonio',
+            'type': 'fill',
+            'source': 'san antonio',
+            'layout': {},
+            'paint': {
+                'fill-color': sanColor,
+                'fill-opacity': 0.8
+            }
+        });
+    });
+    
+    map.on('load', function() {
+        map.addSource('houston', {
+            'type': 'geojson',
+            'data': {
+            'type': 'Feature',
+            'geometry': {
+            'type': 'Polygon',
+            'coordinates': [[[-95.7726, 30.0197],
+                            [-95.8716, 29.7839],
+                            [-95.7058, 29.5584],
+                            [-95.2394, 29.5670],
+                            [-95.2169, 29.6008],
+                            [-95.1587, 29.6437],
+                            [-95.1567, 29.7116],
+                            [-95.1491, 29.7641],
+                            [-95.1767, 29.8354],
+                            [-95.2131, 29.9369],
+                            [-95.3978, 30.0987],
+                            [-95.7726, 30.0197]]]
+                }
+            }
+        });
+        map.addLayer({
+            'id': 'houston',
+            'type': 'fill',
+            'source': 'houston',
+            'layout': {},
+            'paint': {
+                'fill-color': houstonColor,
+                'fill-opacity': 0.8
+            }
+        });
+    });
+
+    map.on('load', function() {
+        map.addSource('austin', {
+            'type': 'geojson',
+            'data': {
+            'type': 'Feature',
+            'geometry': {
+            'type': 'Polygon',
+            'coordinates': [[[-97.8899, 30.1743],
+                            [-97.8542, 30.1313],
+                            [-97.7323, 30.0812],
+                            [-97.6936, 30.0852],
+                            [-97.6605, 30.1226],
+                            [-97.6674, 30.1374],
+                            [-97.6252, 30.1974],
+                            [-97.6207, 30.2289],
+                            [-97.5683, 30.3027],
+                            [-97.5945, 30.3489],
+                            [-97.5791, 30.3926],
+                            [-97.5917, 30.4754],
+                            [-97.6357, 30.4888],
+                            [-97.6999, 30.4809],
+                            [-97.7467, 30.4825],
+                            [-97.7971, 30.4714],
+                            [-97.7898, 30.4461],
+                            [-97.7476, 30.4224],
+                            [-97.7467, 30.3916],
+                            [-97.7902, 30.3671],
+                            [-97.8255, 30.3168],
+                            [-97.8065, 30.2482],
+                            [-97.8252, 30.2362],
+                            [-97.8407, 30.2185],
+                            [-97.8573, 30.2128],
+                            [-97.8899, 30.1743]]]
+                }
+            }
+        });
+        map.addLayer({
+            'id': 'austin',
+            'type': 'fill',
+            'source': 'austin',
+            'layout': {},
+            'paint': {
+                'fill-color': ausColor,
+                'fill-opacity': 0.8
+            }
+        });
+    });
+
+    map.on('load', function() {
+        map.addSource('dallas', {
+            'type': 'geojson',
+            'data': {
+            'type': 'Feature',
+            'geometry': {
+            'type': 'Polygon',
+            'coordinates': [[[-96.8985, 32.9078],
+                            [-96.9007, 32.8661],
+                            [-96.9229, 32.8158],
+                            [-96.9140, 32.7673],
+                            [-96.9192, 32.7225],
+                            [-96.9473, 32.6727],
+                            [-96.8593, 32.6472],
+                            [-96.7993, 32.6441],
+                            [-96.6980, 32.6758],
+                            [-96.6337, 32.6901],
+                            [-96.6152, 32.7231],
+                            [-96.6129, 32.7455],
+                            [-96.6233, 32.7729],
+                            [-96.6337, 32.8425],
+                            [-96.7091, 32.8916],
+                            [-96.7542, 32.9239],
+                            [-96.8378, 32.9264],
+                            [-96.8985, 32.9078]]]
+                }
+            }
+        });
+        map.addLayer({
+            'id': 'dallas',
+            'type': 'fill',
+            'source': 'dallas',
+            'layout': {},
+            'paint': {
+                'fill-color': dallasColor,
+                'fill-opacity': 0.8
+            }
+        });
+    });
+
+
+    map.on('load', function() {
+        map.addSource('fort worth', {
+            'type': 'geojson',
+            'data': {
+            'type': 'Feature',
+            'geometry': {
+            'type': 'Polygon',
+            'coordinates': [[[-97.2072, 32.8333],
+                            [-97.3494, 32.8460],
+                            [-97.4715, 32.7883],
+                            [-97.4849, 32.7419],
+                            [-97.4682, 32.6884],
+                            [-97.4046, 32.6884],
+                            [-97.3210, 32.6701],
+                            [-97.2323, 32.6730],
+                            [-97.2407, 32.6758],
+                            [-97.2072, 32.8333]]]
+                }
+            }
+        });
+        map.addLayer({
+            'id': 'fort worth',
+            'type': 'fill',
+            'source': 'fort worth',
+            'layout': {},
+            'paint': {
+                'fill-color': fortColor,
+                'fill-opacity': 0.8
+            }
+        });
+    });
+</script>
+{% endblock %}
