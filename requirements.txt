@@ -1,0 +1,9 @@
+tweepy
+pandas
+keras
+nltk
+tensorflow
+Werkzeug
+scikit-learn
+gensim
+numpy
